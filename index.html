@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblio-Gaoua | NEXUS C.R.I.S</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){ emailjs.init("1QBk9ijzbJEyV0XQX"); })();
+    </script>
+
+    <style>
+        /* Styles pour le centrage et la mise en page Facebook-style */
+        .page-section { display: none; padding-top: 20px; }
+        #sec-welcome { display: block; } 
+
+        /* Conteneur d'authentification centré */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+            padding: 20px;
+        }
+
+        .auth-box {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Option mot de passe oublié */
+        .forgot-link {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.85em;
+            color: var(--accent);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .forgot-link:hover { text-decoration: underline; }
+
+        /* Profil en haut à droite */
+        .user-profile-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f0f2f5;
+            padding: 6px 15px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+        .user-profile-header:hover { background: #e4e6eb; }
+    </style>
+</head>
+<body class="light-theme"> 
+
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-top">
+            <div class="logo-container">
+                <img src="logo.png" alt="NEXUS" width="40" height="40" onerror="this.style.display='none'">
+                <span>Biblio-Gaoua</span>
+            </div>
+        </div>
+        <div class="menu-items">
+            <div class="item" onclick="showSection('welcome')"><i class="fa fa-home"></i> Accueil</div>
+            
+            <div id="private-menu" style="display: none;">
+                <div class="item" onclick="showSection('profile')"><i class="fa fa-user-circle"></i> Mon Profil</div>
+                <div class="item" onclick="showSection('filiere')"><i class="fa fa-graduation-cap"></i> Mes Cours</div>
+                <div class="item" onclick="showSection('chat')"><i class="fa fa-comments"></i> Forum</div>
+                <div class="item" onclick="showSection('books')"><i class="fa fa-book"></i> Bibliothèque</div>
+            </div>
+            
+            <div class="item" onclick="showSection('about')"><i class="fa fa-info-circle"></i> À propos</div>
+        </div>
+        <div class="sidebar-bottom">
+            <div class="item logout-item" id="logout-btn" onclick="deconnexion()" style="display: none;">
+                <i class="fa fa-sign-out-alt"></i> Déconnexion
+            </div>
+            <p>© Club NEXUS/C.R.I.S</p>
+        </div>
+    </nav>
+
+    <main class="content">
+        <header class="top-bar" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div class="menu-trigger" id="main-menu-btn" onclick="toggleSidebar()" style="display: none; cursor: pointer; font-size: 1.2em;">
+                    <i class="fa fa-bars"></i>
+                </div>
+                <div class="logo-area"><img src="logo.png" alt="Logo" style="height: 35px;" onerror="this.style.display='none'"></div>
+            </div>
+
+            <div class="user-profile-header" id="userHeader" onclick="showSection('profile')" style="cursor: pointer;">
+                <span class="user-name" style="font-weight: 500; font-size: 0.9em;">Se connecter</span>
+                <div class="user-avatar-small"><i class="fa fa-user-circle" style="font-size: 24px; color: #65676b;"></i></div>
+            </div>
+        </header>
+
+        <div id="section-container">
+            <section id="sec-welcome" class="page-section"></section>
+
+            <section id="sec-profile" class="page-section">
+                <div class="auth-container">
+                    <div class="auth-box" id="auth-forms">
+                        <div id="login-form">
+                            <h2 style="margin-bottom: 20px;">Connexion</h2>
+                            <input type="email" id="login-email" placeholder="Email institutionnel" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;">
+                            <input type="password" id="login-pass" placeholder="Code secret NEXUS" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;">
+                            <button class="btn-main" onclick="connexion()" style="width:100%; padding:12px; background:var(--accent); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Se connecter</button>
+                            
+                            <span class="forgot-link" onclick="motDePasseOublie()">Mot de passe oublié ?</span>
+                            
+                            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+                            <button onclick="toggleAuth()" style="background:#42b72a; color:white; border:none; padding:10px 20px; border-radius:8px; font-weight:bold; cursor:pointer;">Créer nouveau compte</button>
+                        </div>
+
+                        <div id="register-form" style="display:none;">
+                            <h2 style="margin-bottom: 20px;">Rejoindre NEXUS</h2>
+                            <input type="text" id="reg-nom" placeholder="Nom" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;">
+                            <input type="text" id="reg-prenom" placeholder="Prénom" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;">
+                            <input type="email" id="reg-email" placeholder="Email" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;">
+                            <input type="text" id="reg-ine" placeholder="Numéro INE" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;">
+                            <button class="btn-main" onclick="sInscrire()" style="width:100%; padding:12px; background:var(--accent); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">S'inscrire</button>
+                            <p onclick="toggleAuth()" style="color:var(--accent); cursor:pointer; margin-top:15px; font-size:0.9em;">Déjà membre ?</p>
+                        </div>
+                    </div>
+
+                    <div id="user-details-card" style="display:none; width: 100%; max-width: 500px;" class="profile-card">
+                        </div>
+                </div>
+            </section>
+
+            <section id="sec-filiere" class="page-section">
+                <div id="filiere-list"></div>
+            </section>
+
+            <section id="sec-chat" class="page-section"></section>
+            <section id="sec-books" class="page-section"></section>
+
+            <section id="sec-about" class="page-section">
+                <div class="hero-surface" style="background: #1a1a1a; color: white; padding: 30px; border-radius: 15px; text-align: center;">
+                    <h2 style="color: #2ecc71;">À propos de NEXUS</h2>
+                    <p style="margin: 15px 0;">Innovation et Excellence académique au CUG.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <button class="btn-back" id="universal-back-btn" onclick="showSection('welcome')" style="display:none; position: fixed; bottom: 20px; right: 20px; z-index: 999; background: #1a1a1a; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor:pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+        <i class="fas fa-home"></i>
+    </button>
+
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+    <script src="welcome.js"></script>
+    <script src="forum.js"></script>
+    <script src="books.js"></script>
+</body>
+</html>

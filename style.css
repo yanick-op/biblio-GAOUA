@@ -1,0 +1,205 @@
+/* --- VARIABLES DE THÈME --- */
+:root {
+    --accent: #2ecc71;       /* Vert Émeraude */
+    --accent-dark: #27ae60;  /* Vert Foncé */
+    --black: #1a1a1a;        /* Noir Mat */
+    --white: #ffffff;
+    --bg-light: #f0f2f5;     /* Gris clair style Facebook */
+    --text: #1c1e21;
+    --text-light: #65676b;
+    --border: #dddfe2;
+    --shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* --- RESET & BASE --- */
+* { margin: 0; padding: 0; box-box-sizing: border-box; }
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text);
+    font-family: 'Google Sans', 'Segoe UI', Roboto, sans-serif;
+    overflow-x: hidden;
+}
+
+/* --- TOP BAR (FIXE) --- */
+.top-bar {
+    height: 60px;
+    background: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* --- SIDEBAR (TYPE FACEBOOK) --- */
+.sidebar {
+    position: fixed;
+    top: 60px;
+    left: -280px; /* Caché par défaut */
+    width: 280px;
+    height: calc(100vh - 60px);
+    background: var(--white);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    padding: 15px;
+}
+
+.sidebar.active {
+    left: 0; /* Glisse vers l'intérieur */
+}
+
+.menu-items .item {
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text);
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.menu-items .item:hover {
+    background: #f2f2f2;
+}
+
+.menu-items .item i {
+    width: 20px;
+    color: var(--accent);
+}
+
+/* --- AUTHENTIFICATION CENTRÉE (MODAL) --- */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px);
+    padding-top: 60px;
+}
+
+.auth-box {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    animation: slideUp 0.4s ease-out;
+}
+
+.auth-box h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: var(--black);
+}
+
+.auth-box input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #f5f6f7;
+    font-size: 1em;
+}
+
+.auth-box input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: white;
+}
+
+.btn-main {
+    width: 100%;
+    padding: 14px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-main:hover {
+    background: var(--accent-dark);
+    transform: scale(1.02);
+}
+
+/* --- PROFIL EN HAUT À DROITE --- */
+.user-profile-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+    background: #f0f2f5;
+}
+
+.user-profile-header:hover {
+    background: #e4e6eb;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.9em;
+    color: var(--text);
+}
+
+/* --- CARTE DE PROFIL (APRÈS CONNEXION) --- */
+.profile-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.profile-info-grid {
+    text-align: left;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+/* --- STYLE DES FILIÈRES --- */
+.filiere-header {
+    background: var(--white);
+    padding: 18px;
+    border-radius: 10px;
+    border-left: 5px solid var(--accent);
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* --- ANIMATIONS --- */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .user-name { display: none; } /* On ne garde que l'icône sur petit mobile */
+    .auth-container { padding: 10px; }
+}
+
+/* --- STYLE DU FORUM & BIBLIO (RAPPEL) --- */
+.book-card { background: white; border-radius: 12px; padding: 15px; box-shadow: var(--shadow); margin-bottom: 15px; }
+#chat-container { height: 75vh; margin-top: 20px; }
